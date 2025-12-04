@@ -1,24 +1,25 @@
 import { useState } from "react";
 
-// handleCategorySubmit passes submitted category from user. it is equivalent to categoryChange function
+// updateCategory is prop, will be passed to parent as equivalent to categoryChange function
 function Form({ updateCategory }) {
   const [selectedCategory, setSelectedCategory] = useState("General");
+  // setter function updates selectedCategory to e.target.value, the value user selects
+  // e = event object containing info that just happened
   const handleChange = (e) => {
-    console.log(e.target.value);
     setSelectedCategory(e.target.value);
   };
   function handleSubmit(e) {
     e.preventDefault();
-    // updateCategory is App.jsx categoryChange function
+    // updateCategory is parent's categoryChange function
     updateCategory(selectedCategory);
   }
   return (
     <>
       <form onSubmit={handleSubmit} className="form">
-        {/* hard coded value attribute to match data.category */}
         <label>Choose a category: </label>
+        {/* select element becomes a controlled component storing selectedCategory */}
+        {/* when category changes, function handleChange will run */}
         <select value={selectedCategory} onChange={handleChange}>
-          {/* hardcoded calue gets stored in selectedCategory */}
           <option value="General">General</option>
           <option value="World">World</option>
           <option value="Nation">Nation</option>

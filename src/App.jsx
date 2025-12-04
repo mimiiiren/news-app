@@ -9,15 +9,16 @@ function App() {
 
   const [showNoNews, setShowNoNews] = useState(true);
 
-  // categoryChange updates category to store received data from user in function/prop updateCategory
-  function categoryChange(updateCategory) {
+  // category is paramater for selectedCategory, which will store user's input
+  function categoryChange(category) {
     fetch(
-      `https://newsdata.io/api/1/latest?apikey=pub_bcf12d02d2704fc9bc40884b44f7eb29&q=${updateCategory}&country=us`
+      `https://newsdata.io/api/1/latest?apikey=pub_bcf12d02d2704fc9bc40884b44f7eb29&q=${category}&country=us`
     )
       .then((res) => res.json())
       .then((data) => {
+        // setter function updates news variable to data fetched from api
         setNews(data.results);
-        // do not show no news if data fetched from api is successful
+        // set showNoNews to false if data fetched from api is successful
         setShowNoNews(false);
       })
       .catch((err) => console.log("Error fetching data:", err));
@@ -26,6 +27,7 @@ function App() {
     <>
       <div className="full-container">
         <h1>Breaking News!</h1>
+        {/* this connects categoryChange function to child's updateCategory prop name */}
         <Form updateCategory={categoryChange} />
         {showNoNews ? (
           <div className="no-news">
